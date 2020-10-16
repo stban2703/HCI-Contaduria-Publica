@@ -46,6 +46,11 @@ function draw() {
   fill("#0B8481");
   rect(0, height - 41, width, 41);
 
+  // Sum Weight
+  for (let j = 0; j < jails[0].capacity.length; j++) {
+    jails[0].weight += jails[0].capacity[j].value;
+  }
+
   // Paint bird slots
   for (let i = 0; i < birdSlot.length; i++) {
     birdSlot[i].paint();
@@ -61,16 +66,7 @@ function draw() {
   // Paint objects
   jails[0].paint();
   jails[1].paint();
-
 }
-
-/*function mouseClicked() {
-  if (mouseX > jails[0].posX && mouseX < jails[0].posX + jails[0].width) {
-    jails[0].weight++;
-  } else {
-    jails[0].weight--;
-  }
-}*/
 
 function mousePressed() {
   for (let i = 0; i < birds.length; i++) {
@@ -94,16 +90,42 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
-  let capacity = jails[0].capacity;
+  //let capacityOne = jails[0].capacity;
+  //let capacityTwo = jails[1].capacity;
 
   for (let i = 0; i < birds.length; i++) {
     let object = birds[i];
-    if (mouseX > jails[0].posX && mouseX < jails[0].posX + jails[0].width
-      && mouseY > jails[0].posY + jails[0].totalHeight - jails[0].jailHeight && mouseY < jails[0].posY + jails[0].totalHeight && object.isGrabbed && capacity.length < 3) {
 
-      capacity.push(object);
-      object.posX = jails[0].posX + (48 * capacity.length);
-      object.posY = jails[0].posY + (jails[0].totalHeight - jails[0].jailHeight) + (jails[0].jailHeight / 2 + 70);
+    for (let j = 0; j < jails.length; j++) {
+      let capacity = jails[j].capacity;
+
+      if (mouseX > jails[j].posX && mouseX < jails[j].posX + jails[j].width && mouseY > jails[j].posY + jails[j].totalHeight - jails[j].jailHeight
+        && mouseY < jails[j].posY + jails[j].totalHeight && object.isGrabbed && capacity.length < 3) {
+        capacity.push(object);
+        object.posX = jails[j].posX + (48 * capacity.length);
+        object.posY = jails[j].posY + (jails[j].totalHeight - jails[j].jailHeight) + (jails[j].jailHeight / 2 + 70);
+        object.isGrabbed = false;
+        object.isOutside = false;
+        object.isInside = true;
+
+      } else if (object.isGrabbed == true) {
+        object.posX = 1177 + object.width / 2;
+        object.posY = (162 + object.height / 2) + 100 * i;
+        object.isGrabbed = false;
+        object.isOutside = true;
+        object.isInside = false;
+      }
+    }
+  }
+
+  /*for (let i = 0; i < birds.length; i++) {
+    let object = birds[i];
+    if (mouseX > jails[1].posX && mouseX < jails[1].posX + jails[1].width
+      && mouseY > jails[1].posY + jails[1].totalHeight - jails[1].jailHeight && mouseY < jails[1].posY + jails[1].totalHeight && object.isGrabbed && capacityTwo.length < 3) {
+
+      capacityTwo.push(object);
+      object.posX = jails[1].posX + (48 * capacityTwo.length);
+      object.posY = jails[1].posY + (jails[1].totalHeight - jails[1].jailHeight) + (jails[1].jailHeight / 2 + 70);
       object.isGrabbed = false;
       object.isOutside = false;
       object.isInside = true;
@@ -115,7 +137,6 @@ function mouseReleased() {
       object.isOutside = true;
       object.isInside = false;
     }
-
-  }
+  }*/
 }
 

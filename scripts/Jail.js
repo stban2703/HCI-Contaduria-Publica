@@ -18,5 +18,4 @@ class Jail {
         }*/
         image(this.img, this.posX, this.posY + (this.move * this.weight));
     }
-
 }
