@@ -25,10 +25,10 @@ let inputSix;
 let button;
 let inputs;
 
-let screen;
+let currentScreen;
 
 function setup() {
-  screen = 5;
+  currentScreen = 5;
   width = 1280;
   height = 720;
   birdSlot = [];
@@ -100,103 +100,111 @@ function setup() {
   })
 
   button = document.querySelector('button');
+  button.addEventListener('click', function(event) {
+    event.preventDefault();
+    currentScreen = 6;
+    button.style.display = "none";
+    inputs.forEach(function (elem, i) {
+      elem.style.display = "none";
+    })
+  })
   console.log(button)
-
 }
 
 function draw() {
+  switch (currentScreen) {
+    case 5:
+      // Paint background
+      background("#FFFBD4");
+      fill("#0B8481");
+      rect(0, height - 41, width, 41);
 
-  // Paint background
-  background("#FFFBD4");
-  fill("#0B8481");
-  rect(0, height - 41, width, 41);
 
-  if (inputOne.value() != "" &&
-    inputTwo.value() != "" &&
-    inputThree.value() != "" &&
-    inputFour.value() != "" &&
-    inputFive.value() != "" &&
-    inputSix.value() != "") {
-    button.classList.add('btn--active');
-    button.disabled = false;
-  } else {
-    button.classList.remove('btn--active');
-    button.disabled = true;
+      if (inputOne.value() != "" &&
+        inputTwo.value() != "" &&
+        inputThree.value() != "" &&
+        inputFour.value() != "" &&
+        inputFive.value() != "" &&
+        inputSix.value() != "") {
+        button.classList.add('btn--active');
+        button.disabled = false;
+      } else {
+        button.classList.remove('btn--active');
+        button.disabled = true;
+      }
+
+      // Paint bird slots
+      for (let i = 0; i < birdSlot.length; i++) {
+        birdSlot[i].paint();
+      }
+
+      // Paint birds
+      for (let i = 0; i < birds.length; i++) {
+        birds[i].paint();
+      }
+
+      // Paint objects
+      leftJail.paint();
+      rightJail.paint();
+      break;
+
+      case 6:
+        background(0);
+        break;
   }
-
-  // Paint bird slots
-  for (let i = 0; i < birdSlot.length; i++) {
-    birdSlot[i].paint();
-  }
-
-  // Paint birds
-  for (let i = 0; i < birds.length; i++) {
-    birds[i].paint();
-  }
-
-  // Paint objects
-  leftJail.paint();
-  rightJail.paint();
 }
 
 function mousePressed() {
 
+  switch (currentScreen) {
+    case 5:
+      for (let i = 0; i < birds.length; i++) {
+        let bird = birds[i];
 
-  for (let i = 0; i < birds.length; i++) {
-    let bird = birds[i];
-
-    if (bird.isHover()) {
-      bird.isGrabbed = true;
-      bird.isOutside = false;
-      birdSelect = bird;
-    }
+        if (bird.isHover()) {
+          bird.isGrabbed = true;
+          bird.isOutside = false;
+          birdSelect = bird;
+        }
+      }
+      break;
   }
-
-  //let object = birds[i];
-  /*
-  if (mouseX > object.posX - object.width / 2 && mouseX < object.posX + object.width / 2
-    && mouseY > object.posY - object.height / 2 && mouseY < object.posY + object.height / 2 && object.isOutside == true && object.isInside == false) {
-    object.isGrabbed = true;
-    object.isOutside = false;
-  }
- 
-
-  if (mouseX > object.posX - object.width / 2 && mouseX < object.posX + object.width / 2
-    && mouseY > object.posY - object.height / 2 && mouseY < object.posY + object.height / 2 && object.isOutside == false && object.isInside == true) {
-    object.isGrabbed = true;
-    object.isInside = false;
-  }
-    */
-
 }
 
 function mouseDragged() {
 
-  if (birdSelect != undefined) {
-    if (birdSelect.isGrabbed == true) {
-      birdSelect.posX = mouseX;
-      birdSelect.posY = mouseY;
-    }
+  switch (currentScreen) {
+    case 5:
+      if (birdSelect != undefined) {
+        if (birdSelect.isGrabbed == true) {
+          birdSelect.posX = mouseX;
+          birdSelect.posY = mouseY;
+        }
+      }
+      break;
   }
 }
 
 function mouseReleased() {
 
+  switch (currentScreen) {
+    case 5:
+      if (birdSelect != undefined && leftJail.isHover()) {
+        birdSelect.removeJail();
+        leftJail.addBird(birdSelect);
 
-  if (birdSelect != undefined && leftJail.isHover()) {
-    birdSelect.removeJail();
-    leftJail.addBird(birdSelect);
+      } else if (birdSelect != undefined && rightJail.isHover()) {
+        birdSelect.removeJail();
+        rightJail.addBird(birdSelect);
 
-  } else if (birdSelect != undefined && rightJail.isHover()) {
-    birdSelect.removeJail();
-    rightJail.addBird(birdSelect);
+      } else if (birdSelect != undefined && birdSelect.isGrabbed == true) {
 
-  } else if (birdSelect != undefined && birdSelect.isGrabbed == true) {
+        birdSelect.removeJail();
+        birdSelect.posInit();
 
-    birdSelect.removeJail();
-    birdSelect.posInit();
+      }
 
+      birdSelect = undefined;
+      break;
   }
-
-  birdSelect = undefined;
 }
