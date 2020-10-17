@@ -49,6 +49,25 @@ let currentScreen;
 let timer;
 let isRunning;
 
+function preload() {
+  // Birds
+  weightOne = loadImage("./../src/img/pesa-img.png")
+  yellowImg = loadImage("./../src/img/yellow-img.png");
+  greenImg = loadImage("./../src/img/green-img.png");
+  blueImg = loadImage("./../src/img/blue-img.png");
+  orangeImg = loadImage("./../src/img/orange-img.png");
+  redImg = loadImage("./../src/img/red-img.png");
+
+  // Screens
+  startScreen = loadImage("./../src/img/startscreen-img.png");
+  startBtn = loadImage("./../src/img/starbutton-img.png")
+  contextScreen = loadImage("./../src/img/contextscreen-img.png");
+  instruct1Screen = loadImage("./../src/img/instruct1-img.png");
+  instruct2Screen = loadImage("./../src/img/instruct2-img.png");
+  passwordScreen = loadImage("./../src/img/passwordScreen-img.png");
+  backArrow = loadImage("./../src/img/back-img.png");
+}
+
 function setup() {
   timer = 300;
   isRunning = false;
@@ -66,23 +85,6 @@ function setup() {
 
   leftJail.compareJail(rightJail);
   rightJail.compareJail(leftJail);
-
-  // Birds
-  weightOne = loadImage("./../src/img/pesa-img.png")
-  yellowImg = loadImage("./../src/img/yellow-img.png");
-  greenImg = loadImage("./../src/img/green-img.png");
-  blueImg = loadImage("./../src/img/blue-img.png");
-  orangeImg = loadImage("./../src/img/orange-img.png");
-  redImg = loadImage("./../src/img/red-img.png");
-
-  // Screens
-  startScreen = loadImage("./../src/img/startscreen-img.png");
-  startBtn = loadImage("./../src/img/starbutton-img.png")
-  contextScreen = loadImage("./../src/img/contextscreen-img.png");
-  instruct1Screen = loadImage("./../src/img/instruct1-img.png");
-  instruct2Screen = loadImage("./../src/img/instruct2-img.png");
-  passwordScreen = loadImage("./../src/img/passwordScreen-img.png");
-  backArrow = loadImage("./../src/img/back-img.png");
 
   for (let i = 0; i < 6; i++) {
     birdSlot.push(new BirdSlot(1159, 52 + 99 * i));
