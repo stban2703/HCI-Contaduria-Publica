@@ -16,8 +16,8 @@ class Jail {
         this.capacity = [];
         this.widthJail = 174;
         this.heightJail = 186;
-        this.img = loadImage('../src/img/jail-img.png');
-        this.rope = loadImage('../src/img/rope-img.png', () => {
+        this.img = loadImage("../src/img/jail-img.png");
+        this.rope = loadImage("../src/img/rope-img.png", () => {
             this.widthRope = this.rope.width;
             this.heightRope = this.rope.height;
         });
