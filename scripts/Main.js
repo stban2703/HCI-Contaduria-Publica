@@ -9,15 +9,28 @@ let redImg;
 
 let birdSlot;
 let birds;
-let jails;
+
+let leftJail;
+let rightJail;
+
+let birdSelect = undefined;
+
+let input;
 
 function setup() {
   width = 1280;
   height = 720;
   birdSlot = [];
   birds = [];
-  jails = [];
+  createCanvas(width, height);
 
+  leftJail = new Jail(341, height / 2, 0);
+  rightJail = new Jail(774, height / 2, 0);
+
+  leftJail.compareJail(rightJail);
+  rightJail.compareJail(leftJail);
+
+  weightOne = loadImage('../src/img/pesa-img.png')
   yellowImg = loadImage('../src/img/yellow-img.png');
   greenImg = loadImage('../src/img/green-img.png');
   blueImg = loadImage('../src/img/blue-img.png');
@@ -28,28 +41,32 @@ function setup() {
     birdSlot.push(new BirdSlot(1159, 52 + 99 * i));
   }
 
-  jails.push(new Jail(341, -629, 0));
-  jails.push(new Jail(774, -629, 0));
-
+  var pesa = new Bird(1177, 62, false, false, true, weightOne, 1);
+  pesa.setBounds(-13);
+  birds.push(pesa);
   birds.push(new Bird(1177, 162, false, false, true, yellowImg, 2));
   birds.push(new Bird(1177, 262, false, false, true, greenImg, 5));
   birds.push(new Bird(1177, 362, false, false, true, blueImg, 0));
   birds.push(new Bird(1177, 462, false, false, true, orangeImg, 1));
   birds.push(new Bird(1177, 562, false, false, true, redImg, 3));
 
-  createCanvas(width, height);
+
+  leftJail.addBird(birds[0]);
+  leftJail.addBird(birds[3]);
+
+  input = createInput();
+  input.position(1087, 75);
+  input.size(50, 50);
+
 }
 
+
 function draw() {
+
   // Paint background
   background("#FFFBD4");
   fill("#0B8481");
   rect(0, height - 41, width, 41);
-
-  // Sum Weight
-  for (let j = 0; j < jails[0].capacity.length; j++) {
-    jails[0].weight += jails[0].capacity[j].value;
-  }
 
   // Paint bird slots
   for (let i = 0; i < birdSlot.length; i++) {
@@ -61,82 +78,69 @@ function draw() {
     birds[i].paint();
   }
 
-  jails[0].weight = jails[1].weight * -1;
-
   // Paint objects
-  jails[0].paint();
-  jails[1].paint();
+  leftJail.paint();
+  rightJail.paint();
 }
 
 function mousePressed() {
+
+
   for (let i = 0; i < birds.length; i++) {
-    let object = birds[i];
-    if (mouseX > object.posX - object.width / 2 && mouseX < object.posX + object.width / 2
-      && mouseY > object.posY - object.height / 2 && mouseY < object.posY + object.height / 2 && object.isOutside == true) {
-      object.isGrabbed = true;
-      object.isOutside = false;
+    let bird = birds[i];
+
+    if (bird.isHover()) {
+      bird.isGrabbed = true;
+      bird.isOutside = false;
+      birdSelect = bird;
     }
   }
+
+  //let object = birds[i];
+  /*
+  if (mouseX > object.posX - object.width / 2 && mouseX < object.posX + object.width / 2
+    && mouseY > object.posY - object.height / 2 && mouseY < object.posY + object.height / 2 && object.isOutside == true && object.isInside == false) {
+    object.isGrabbed = true;
+    object.isOutside = false;
+  }
+ 
+
+  if (mouseX > object.posX - object.width / 2 && mouseX < object.posX + object.width / 2
+    && mouseY > object.posY - object.height / 2 && mouseY < object.posY + object.height / 2 && object.isOutside == false && object.isInside == true) {
+    object.isGrabbed = true;
+    object.isInside = false;
+  }
+    */
+
 }
 
 function mouseDragged() {
-  for (let i = 0; i < birds.length; i++) {
-    let object = birds[i];
-    if (object.isGrabbed == true) {
-      object.posX = mouseX;
-      object.posY = mouseY;
+
+  if (birdSelect != undefined) {
+    if (birdSelect.isGrabbed == true) {
+      birdSelect.posX = mouseX;
+      birdSelect.posY = mouseY;
     }
   }
 }
 
 function mouseReleased() {
-  //let capacityOne = jails[0].capacity;
-  //let capacityTwo = jails[1].capacity;
 
-  for (let i = 0; i < birds.length; i++) {
-    let object = birds[i];
 
-    for (let j = 0; j < jails.length; j++) {
-      let capacity = jails[j].capacity;
+  if (birdSelect != undefined && leftJail.isHover()) {
+    birdSelect.removeJail();
+    leftJail.addBird(birdSelect);
 
-      if (mouseX > jails[j].posX && mouseX < jails[j].posX + jails[j].width && mouseY > jails[j].posY + jails[j].totalHeight - jails[j].jailHeight
-        && mouseY < jails[j].posY + jails[j].totalHeight && object.isGrabbed && capacity.length < 3) {
-        capacity.push(object);
-        object.posX = jails[j].posX + (48 * capacity.length);
-        object.posY = jails[j].posY + (jails[j].totalHeight - jails[j].jailHeight) + (jails[j].jailHeight / 2 + 70);
-        object.isGrabbed = false;
-        object.isOutside = false;
-        object.isInside = true;
+  } else if (birdSelect != undefined && rightJail.isHover()) {
+    birdSelect.removeJail();
+    rightJail.addBird(birdSelect);
 
-      } else if (object.isGrabbed == true) {
-        object.posX = 1177 + object.width / 2;
-        object.posY = (162 + object.height / 2) + 100 * i;
-        object.isGrabbed = false;
-        object.isOutside = true;
-        object.isInside = false;
-      }
-    }
+  } else if (birdSelect != undefined && birdSelect.isGrabbed == true) {
+
+    birdSelect.removeJail();
+    birdSelect.posInit();
+
   }
 
-  /*for (let i = 0; i < birds.length; i++) {
-    let object = birds[i];
-    if (mouseX > jails[1].posX && mouseX < jails[1].posX + jails[1].width
-      && mouseY > jails[1].posY + jails[1].totalHeight - jails[1].jailHeight && mouseY < jails[1].posY + jails[1].totalHeight && object.isGrabbed && capacityTwo.length < 3) {
-
-      capacityTwo.push(object);
-      object.posX = jails[1].posX + (48 * capacityTwo.length);
-      object.posY = jails[1].posY + (jails[1].totalHeight - jails[1].jailHeight) + (jails[1].jailHeight / 2 + 70);
-      object.isGrabbed = false;
-      object.isOutside = false;
-      object.isInside = true;
-
-    } else if (object.isGrabbed == true) {
-      object.posX = 1177 + object.width / 2;
-      object.posY = (162 + object.height / 2) + 100 * i;
-      object.isGrabbed = false;
-      object.isOutside = true;
-      object.isInside = false;
-    }
-  }*/
+  birdSelect = undefined;
 }
-
