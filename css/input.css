@@ -1,3 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+
 input {
     font-size: 30px;
+}
+
+button {
+    font-family: 'Montserrat';
+    width: 185px;
+    height: 41px;
+    border: none;
+    background: #FAA68E;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 25px;
+    color: white;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn--active {
+    background: #F98E70;
 }

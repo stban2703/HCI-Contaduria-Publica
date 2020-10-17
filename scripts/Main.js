@@ -15,9 +15,20 @@ let rightJail;
 
 let birdSelect = undefined;
 
-let input;
+let inputOne;
+let inputTwo;
+let inputThree;
+let inputFour;
+let inputFive;
+let inputSix;
+
+let button;
+let inputs;
+
+let screen;
 
 function setup() {
+  screen = 5;
   width = 1280;
   height = 720;
   birdSlot = [];
@@ -54,12 +65,44 @@ function setup() {
   leftJail.addBird(birds[0]);
   leftJail.addBird(birds[3]);
 
-  input = createInput();
-  input.position(1087, 75);
-  input.size(50, 50);
+  inputOne = createInput();
+  inputOne.position(1087, 75);
+  inputOne.size(50, 50);
+
+  inputTwo = createInput();
+  inputTwo.position(1087, 175);
+  inputTwo.size(50, 50);
+
+  inputThree = createInput();
+  inputThree.position(1087, 275);
+  inputThree.size(50, 50);
+
+  inputFour = createInput();
+  inputFour.position(1087, 375);
+  inputFour.size(50, 50);
+
+  inputFive = createInput();
+  inputFive.position(1087, 475);
+  inputFive.size(50, 50);
+
+  inputSix = createInput();
+  inputSix.position(1087, 575);
+  inputSix.size(50, 50);
+
+  listoBtn = createButton('Listo');
+  listoBtn.position(575, 550);
+
+  inputs = document.querySelectorAll('input');
+
+  inputs.forEach(function (elem, i) {
+    elem.setAttribute('type', 'number');
+    console.log(elem)
+  })
+
+  button = document.querySelector('button');
+  console.log(button)
 
 }
-
 
 function draw() {
 
@@ -67,6 +110,19 @@ function draw() {
   background("#FFFBD4");
   fill("#0B8481");
   rect(0, height - 41, width, 41);
+
+  if (inputOne.value() != "" &&
+    inputTwo.value() != "" &&
+    inputThree.value() != "" &&
+    inputFour.value() != "" &&
+    inputFive.value() != "" &&
+    inputSix.value() != "") {
+    button.classList.add('btn--active');
+    button.disabled = false;
+  } else {
+    button.classList.remove('btn--active');
+    button.disabled = true;
+  }
 
   // Paint bird slots
   for (let i = 0; i < birdSlot.length; i++) {
