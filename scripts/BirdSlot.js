@@ -4,7 +4,7 @@ class BirdSlot {
         this.posY = posY;
         this.width = 80;
         this.height = 87;
-        this.img = loadImage('../src/img/slot-img.png');
+        this.img = loadImage("./../src/img/slot-img.png");
     }
 
     paint() {
