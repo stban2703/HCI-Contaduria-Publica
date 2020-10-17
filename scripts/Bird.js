@@ -53,10 +53,8 @@ class Bird {
         this.posX = this.posXInit;
         this.posY = this.posYInit;
 
-
         // this.animatePosition(this.posX, this.posXInit, (ref) => { this.posX += ref });
         // this.animatePosition(this.posY, this.posYInit, (ref) => { this.posY += ref });
-
 
         this.isGrabbed = false;
         this.isOutside = true;
@@ -74,7 +72,7 @@ class Bird {
 
         imageMode(CENTER);
         image(this.img, this.posX, this.posY);
-        text(this.value, this.posX, this.posY + 50);
+        //text(this.value, this.posX, this.posY + 50);
     }
 
     insideJail(jail) {
