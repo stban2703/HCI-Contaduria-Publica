@@ -1,10 +1,10 @@
 class BirdSlot {
-    constructor(posX, posY) {
+    constructor(posX, posY, img) {
         this.posX = posX;
         this.posY = posY;
         this.width = 80;
         this.height = 87;
-        this.img = loadImage("./src/img/slot-img.png");
+        this.img = img;
     }
 
     paint() {

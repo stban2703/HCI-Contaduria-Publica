@@ -22,7 +22,6 @@ let inputFour;
 let inputFive;
 let inputSix;
 
-
 let startScreen;
 let startBtn;
 let contextScreen;
@@ -31,6 +30,12 @@ let instruct2Screen;
 let passwordScreen;
 let backArrow;
 
+let slotWeight;
+let slotYellow;
+let slotGreen;
+let slotBlue;
+let slotOrange;
+let slotRed;
 
 let inputPassword;
 
@@ -47,9 +52,16 @@ let inputs;
 let currentScreen;
 
 let timer;
-let isRunning;
 
 function preload() {
+  // Slots
+  slotWeight = loadImage("./src/img/slot-weight.png");
+  slotYellow = loadImage("./src/img/slot-yellow.png");
+  slotGreen = loadImage("./src/img/slot-green.png");
+  slotBlue = loadImage("./src/img/slot-blue.png");
+  slotOrange = loadImage("./src/img/slot-orange.png");
+  slotRed = loadImage("./src/img/slot-red.png");
+
   // Birds
   weightOne = loadImage("./src/img/pesa-img.png")
   yellowImg = loadImage("./src/img/yellow-img.png");
@@ -59,9 +71,9 @@ function preload() {
   redImg = loadImage("./src/img/red-img.png");
 
   // Screens
-  startScreen = loadImage("./src/img/startscreen-img.png");
+  startScreen = loadImage("./src/img/startscreen-img.svg");
   startBtn = loadImage("./src/img/starbutton-img.png")
-  contextScreen = loadImage("./src/img/contextscreen-img.png");
+  contextScreen = loadImage("./src/img/contextscreen-img.svg");
   instruct1Screen = loadImage("./src/img/instruct1-img.png");
   instruct2Screen = loadImage("./src/img/instruct2-img.png");
   passwordScreen = loadImage("./src/img/passwordScreen-img.png");
@@ -69,9 +81,6 @@ function preload() {
 }
 
 function setup() {
-  timer = 300;
-  isRunning = false;
-
   currentScreen = 1;
   width = 1280;
   height = 720;
@@ -80,57 +89,57 @@ function setup() {
 
   createCanvas(width, height);
 
-  leftJail = new Jail(360, height / 2, 0);
-  rightJail = new Jail(920, height / 2, 0);
+  timer = new Timer(10, 10);
+
+  leftJail = new Jail(460, height / 2, 0);
+  rightJail = new Jail(870, height / 2, 0);
 
   leftJail.compareJail(rightJail);
   rightJail.compareJail(leftJail);
 
-  for (let i = 0; i < 6; i++) {
-    birdSlot.push(new BirdSlot(1159, 52 + 99 * i));
-  }
 
-  var pesa = new Bird(1177, 62, false, false, true, weightOne, 1);
+  birdSlot.push(new BirdSlot(1159, 52 + 99 * 0, slotWeight));
+  birdSlot.push(new BirdSlot(1159, 52 + 99 * 1, slotYellow));
+  birdSlot.push(new BirdSlot(1159, 52 + 99 * 2, slotGreen));
+  birdSlot.push(new BirdSlot(1159, 52 + 99 * 3, slotBlue));
+  birdSlot.push(new BirdSlot(1159, 52 + 99 * 4, slotOrange));
+  birdSlot.push(new BirdSlot(1159, 52 + 99 * 5, slotRed));
+
+
+  var pesa = new Bird(1173, 59, false, false, true, weightOne, 1);
   pesa.setBounds(-13);
   birds.push(pesa);
-  birds.push(new Bird(1177, 162, false, false, true, yellowImg, 2));
-  birds.push(new Bird(1177, 262, false, false, true, greenImg, 5));
-  birds.push(new Bird(1177, 362, false, false, true, blueImg, 0));
-  birds.push(new Bird(1177, 462, false, false, true, orangeImg, 1));
-  birds.push(new Bird(1177, 562, false, false, true, redImg, 3));
+  birds.push(new Bird(1173, 160, false, false, true, yellowImg, 2));
+  birds.push(new Bird(1173, 260, false, false, true, greenImg, 5));
+  birds.push(new Bird(1173, 360, false, false, true, blueImg, 0));
+  birds.push(new Bird(1173, 460, false, false, true, orangeImg, 1));
+  birds.push(new Bird(1173, 560, false, false, true, redImg, 3));
 
   // Add birds to jail at start
-  leftJail.addBird(birds[0]);
-  leftJail.addBird(birds[4]);
-  leftJail.addBird(birds[3]);
+  //leftJail.addBird(birds[0]);
+  //leftJail.addBird(birds[4]);
 
-  rightJail.addBird(birds[1]);
-  rightJail.addBird(birds[2]);
-  rightJail.addBird(birds[5]);
+  //rightJail.addBird(birds[1]);
 
+  // Inputs
   inputOne = createInput();
-  inputOne.position(1087, 75);
-  inputOne.size(50, 50);
-
+  inputOne.position(1087, 70);
+  inputOne.size(60, 50);
   inputTwo = createInput();
-  inputTwo.position(1087, 175);
-  inputTwo.size(50, 50);
-
+  inputTwo.position(1087, 170);
+  inputTwo.size(60, 50);
   inputThree = createInput();
-  inputThree.position(1087, 275);
-  inputThree.size(50, 50);
-
+  inputThree.position(1087, 270);
+  inputThree.size(60, 50);
   inputFour = createInput();
-  inputFour.position(1087, 375);
-  inputFour.size(50, 50);
-
+  inputFour.position(1087, 370);
+  inputFour.size(60, 50);
   inputFive = createInput();
-  inputFive.position(1087, 475);
-  inputFive.size(50, 50);
-
+  inputFive.position(1087, 470);
+  inputFive.size(60, 50);
   inputSix = createInput();
-  inputSix.position(1087, 575);
-  inputSix.size(50, 50);
+  inputSix.position(1087, 570);
+  inputSix.size(60, 50);
 
   inputPassword = createInput();
   inputPassword.position(609, 462);
@@ -146,6 +155,9 @@ function setup() {
 
   inputs.forEach(function (elem, i) {
     elem.setAttribute('type', 'number');
+    elem.setAttribute('value', 0);
+    elem.setAttribute('min', 0);
+    elem.setAttribute('max', 99);
   })
 
   button = document.querySelectorAll('button');
@@ -161,7 +173,7 @@ function setup() {
 function draw() {
   switch (currentScreen) {
     case 1:
-      image(startScreen, 0, 0);
+      image(startScreen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
       inputs.forEach(function (elem, i) {
@@ -227,9 +239,10 @@ function draw() {
       // Paint background
       cursor(ARROW);
       background("#FFFBD4");
+      
+      timer.paint();
+      
       fill("#0B8481");
-      textSize(50);
-      text("Tiempo: " + timer, 10, 50);
       rect(0, height - 41, width, 41);
 
       textSize(20);
@@ -269,9 +282,9 @@ function draw() {
       leftJail.paint();
       rightJail.paint();
 
-      if(isRunning) {
-        if(frameCount % 60 == 0) {
-          timer--;
+      if (timer.isRunning) {
+        if (frameCount % 60 == 0) {
+          timer.time--;
         }
       }
 
@@ -306,8 +319,8 @@ function draw() {
         buttonLast.disabled = true;
       }
 
-      if(isRunning) {
-        if(frameCount % 60 == 0) {
+      if (isRunning) {
+        if (frameCount % 60 == 0) {
           timer--;
         }
       }
@@ -315,7 +328,7 @@ function draw() {
       verificarBtn.mousePressed(function () {
         if (inputs[6].value == 8) {
           window.alert("¡Muy bien! :D");
-          isRunning = false;
+          timer.isRunning = false;
         } else {
           window.alert("¡Oh no, esa no era la clave! :c");
         }
@@ -347,9 +360,9 @@ function mousePressed() {
         currentScreen = 3;
       };
 
-      if(mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
+      if (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
         currentScreen = 5;
-        isRunning = true;
+        timer.isRunning = true;
       };
       break;
     case 5:
