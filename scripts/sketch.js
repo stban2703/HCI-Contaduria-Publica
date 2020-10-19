@@ -22,35 +22,46 @@ let inputFour;
 let inputFive;
 let inputSix;
 
+// Screens and images
 let startScreen;
 let startBtn;
 let contextScreen;
 let instruct1Screen;
 let instruct2Screen;
+let instruct3Screen;
+let instruct4Screen;
+let instruct5Screen;
+let instruct6Screen;
+let instruct7Screen;
 let passwordScreen;
 let backArrow;
-
+let nextArrow;
+let gif_loadImg;
+let gif_createImg;
 let slotWeight;
 let slotYellow;
 let slotGreen;
 let slotBlue;
 let slotOrange;
 let slotRed;
+let url;
+let gifstep1;
 
+let myGif;
+
+
+// Inputs and buttons
 let inputPassword;
-
 let listoBtn;
 let verificarBtn;
-
 let button;
-
 let buttonFirst;
 let buttonLast;
-
 let inputs;
 
-let currentScreen;
 
+
+let currentScreen;
 let timer;
 
 function preload() {
@@ -74,14 +85,26 @@ function preload() {
   startScreen = loadImage("./src/img/startscreen-img.svg");
   startBtn = loadImage("./src/img/starbutton-img.png")
   contextScreen = loadImage("./src/img/contextscreen-img.svg");
-  instruct1Screen = loadImage("./src/img/instruct1-img.png");
-  instruct2Screen = loadImage("./src/img/instruct2-img.png");
+  instruct1Screen = loadImage("./src/img/step1.jpg");
+  instruct2Screen = loadImage("./src/img/step2.jpg");
+  instruct3Screen = loadImage("./src/img/step3.jpg");
+  instruct4Screen = loadImage("./src/img/step4.jpg");
+  instruct5Screen = loadImage("./src/img/step5.jpg");
+  instruct6Screen = loadImage("./src/img/step6.jpg");
+  instruct7Screen = loadImage("./src/img/step7.jpg");
   passwordScreen = loadImage("./src/img/passwordScreen-img.png");
   backArrow = loadImage("./src/img/back-img.png");
+
+  // Animation
+  //gif_loadImg = loadImage("./src/video/animacion.gif");
+  //gif_createImg = createImg("./src/video/animacion.gif");
+  //nextArrow = createImg("./src/img/nextarrow.png");
+
+  gifstep1 = "./src/video/animacion.gif";
 }
 
 function setup() {
-  currentScreen = 1;
+  currentScreen = 3;
   width = 1280;
   height = 720;
   birdSlot = [];
@@ -166,7 +189,7 @@ function setup() {
   buttonLast = button[1];
 
   buttonFirst.addEventListener('click', function () {
-    currentScreen = 6;
+    currentScreen = 11;
   })
 }
 
@@ -205,14 +228,19 @@ function draw() {
       break;
 
     case 3:
-      image(instruct1Screen, 0, 0);
+      //background(255);
+      image(instruct1Screen, 0, 0, 1280, 720);
+      //myGif = p5Gif.loadGif(gifstep1);
+      //gif_createImg.position(0, 0);
+      //nextArrow.position(814, 570);
+
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       })
 
-      if (mouseX > 878 && mouseX < 878 + 54 && mouseY > 540 && mouseY < 540 + 45) {
+      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -220,15 +248,14 @@ function draw() {
       break;
 
     case 4:
-      image(instruct2Screen, 0, 0);
+      image(instruct2Screen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
 
-      if ((mouseX > 60 && mouseX < 60 + 54 && mouseY > 300 && mouseY < 300 + 45) ||
-        (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118)) {
+      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -236,12 +263,83 @@ function draw() {
       break;
 
     case 5:
+      image(instruct3Screen, 0, 0, 1280, 720);
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
+      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
+        cursor(HAND);
+      } else {
+        cursor(ARROW);
+      }
+      break;
+
+    case 6:
+      image(instruct4Screen, 0, 0, 1280, 720);
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
+      if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
+        cursor(HAND);
+      } else {
+        cursor(ARROW);
+      }
+      break;
+
+    case 7:
+      image(instruct5Screen, 0, 0, 1280, 720);
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
+      if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
+        cursor(HAND);
+      } else {
+        cursor(ARROW);
+      }
+      break;
+
+    case 8:
+      image(instruct6Screen, 0, 0, 1280, 720);
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
+      if (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
+        cursor(HAND);
+      } else {
+        cursor(ARROW);
+      }
+      break;
+
+    case 9:
+      image(instruct7Screen, 0, 0, 1280, 720);
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
+
+      if (mouseX > 624 && mouseX < 624 + 94 && mouseY > 455 && mouseY < 455 + 118) {
+        cursor(HAND);
+      } else {
+        cursor(ARROW);
+      }
+      break;
+
+    case 10:
       // Paint background
       cursor(ARROW);
       background("#FFFBD4");
-      
+
       timer.paint();
-      
+
       fill("#0B8481");
       rect(0, height - 41, width, 41);
 
@@ -290,12 +388,12 @@ function draw() {
 
       break;
 
-    case 6:
+    case 11:
       background("#FFFBD4");
       imageMode(CORNER)
       image(passwordScreen, 0, 0);
       image(backArrow, 120, 300);
-      text("Tiempo: " + timer, 10, 50);
+      timer.paint();
       fill("#0B8481");
       rect(0, height - 41, width, 41);
       buttonFirst.style.display = "none";
@@ -317,12 +415,6 @@ function draw() {
       } else {
         buttonLast.classList.remove('btn--active');
         buttonLast.disabled = true;
-      }
-
-      if (isRunning) {
-        if (frameCount % 60 == 0) {
-          timer--;
-        }
       }
 
       verificarBtn.mousePressed(function () {
@@ -351,21 +443,43 @@ function mousePressed() {
       }
       break;
     case 3:
-      if (mouseX > 878 && mouseX < 878 + 54 && mouseY > 540 && mouseY < 540 + 45) {
+      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         currentScreen = 4;
       }
       break;
     case 4:
-      if (mouseX > 60 && mouseX < 60 + 54 && mouseY > 300 && mouseY < 300 + 45) {
-        currentScreen = 3;
-      };
-
-      if (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
+      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         currentScreen = 5;
-        timer.isRunning = true;
-      };
+      }
       break;
     case 5:
+      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
+        currentScreen = 6;
+      }
+      break;
+    case 6:
+      if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
+        currentScreen = 7;
+      }
+      break;
+    case 7:
+      if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
+        currentScreen = 8;
+      }
+      break;
+
+    case 8:
+      if (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
+        currentScreen = 9;
+      }
+      break;
+    case 9:
+      if (mouseX > 624 && mouseX < 624 + 94 && mouseY > 455 && mouseY < 455 + 118) {
+        currentScreen = 10;
+        timer.isRunning = true;
+      }
+      break;
+    case 10:
       for (let i = 0; i < birds.length; i++) {
         let bird = birds[i];
         if (bird.isHover()) {
@@ -374,10 +488,14 @@ function mousePressed() {
           birdSelect = bird;
         }
       }
-      break;
-    case 6:
+
       if (mouseX > 120 && mouseX < 120 + 54 && mouseY > 300 && mouseY < 300 + 45) {
-        currentScreen = 5;
+        currentScreen = 11;
+      }
+      break;
+    case 11:
+      if (mouseX > 120 && mouseX < 120 + 54 && mouseY > 300 && mouseY < 300 + 45) {
+        currentScreen = 10;
       }
       break;
   }
@@ -386,7 +504,7 @@ function mousePressed() {
 function mouseDragged() {
 
   switch (currentScreen) {
-    case 5:
+    case 10:
       if (birdSelect != undefined) {
         if (birdSelect.isGrabbed == true) {
           birdSelect.posX = mouseX;
@@ -400,7 +518,7 @@ function mouseDragged() {
 function mouseReleased() {
 
   switch (currentScreen) {
-    case 5:
+    case 10:
       if (birdSelect != undefined && leftJail.isHover()) {
         birdSelect.removeJail();
         leftJail.addBird(birdSelect);

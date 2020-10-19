@@ -4,6 +4,10 @@
     margin: 0;
 }
 
+canvas {
+    display: block;
+}
+
 input {
     font-size: 30px;
     border-style: solid;
