@@ -31,12 +31,18 @@ class Timer {
         rect(66.09, 82, this.width, 19, 8);
         strokeWeight(1);
 
-        if (this.time <= this.time / 2) {
+        if (this.isRunning) {
+            if (frameCount % 60 == 0) {
+              this.time--;
+            }
+          }
+
+        if (this.time <= 180 && this.time >= 75) {
             this.red = 235;
             this.green = 179;
             this.blue = 58;
 
-        } else if (this.time <= this.time / 4) {
+        } else if (this.time <= 100)  {
             this.red = 233;
             this.green = 20;
             this.blue = 100;

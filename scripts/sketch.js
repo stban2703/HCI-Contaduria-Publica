@@ -33,6 +33,10 @@ let instruct4Screen;
 let instruct5Screen;
 let instruct6Screen;
 let instruct7Screen;
+let wrongpassword;
+let badending;
+let goodending;
+let balancescreen;
 let passwordScreen;
 let backArrow;
 let nextArrow;
@@ -49,7 +53,6 @@ let gifstep1;
 
 let myGif;
 
-
 // Inputs and buttons
 let inputPassword;
 let listoBtn;
@@ -58,8 +61,6 @@ let button;
 let buttonFirst;
 let buttonLast;
 let inputs;
-
-
 
 let currentScreen;
 let timer;
@@ -92,8 +93,11 @@ function preload() {
   instruct5Screen = loadImage("./src/img/step5.jpg");
   instruct6Screen = loadImage("./src/img/step6.jpg");
   instruct7Screen = loadImage("./src/img/step7.jpg");
-  passwordScreen = loadImage("./src/img/passwordScreen-img.png");
-  backArrow = loadImage("./src/img/back-img.png");
+  balancescreen = loadImage("./src/img/balancescreen.jpg");
+  wrongpassword = loadImage("./src/img/wrongpassword.jpg");
+  badending = loadImage("./src/img/badending.jpg");
+  goodending = loadImage("./src/img/goodending.jpg");
+  passwordScreen = loadImage("./src/img/passwordScreen.jpg");
 
   // Animation
   //gif_loadImg = loadImage("./src/video/animacion.gif");
@@ -104,7 +108,7 @@ function preload() {
 }
 
 function setup() {
-  currentScreen = 3;
+  currentScreen = 1;
   width = 1280;
   height = 720;
   birdSlot = [];
@@ -114,8 +118,8 @@ function setup() {
 
   timer = new Timer(10, 10);
 
-  leftJail = new Jail(460, height / 2, 0);
-  rightJail = new Jail(870, height / 2, 0);
+  leftJail = new Jail(290, height / 2 - 10, 0);
+  rightJail = new Jail(930, height / 2 - 10, 0);
 
   leftJail.compareJail(rightJail);
   rightJail.compareJail(leftJail);
@@ -134,13 +138,14 @@ function setup() {
   birds.push(pesa);
   birds.push(new Bird(1173, 160, false, false, true, yellowImg, 2));
   birds.push(new Bird(1173, 260, false, false, true, greenImg, 5));
-  birds.push(new Bird(1173, 360, false, false, true, blueImg, 0));
+  birds.push(new Bird(1173, 360, false, false, true, blueImg, 4));
   birds.push(new Bird(1173, 460, false, false, true, orangeImg, 1));
   birds.push(new Bird(1173, 560, false, false, true, redImg, 3));
 
   // Add birds to jail at start
-  //leftJail.addBird(birds[0]);
-  //leftJail.addBird(birds[4]);
+  leftJail.addBird(birds[0]);
+  leftJail.addBird(birds[4]);
+  rightJail.addBird(birds[1]);
 
   //rightJail.addBird(birds[1]);
 
@@ -166,10 +171,10 @@ function setup() {
 
   inputPassword = createInput();
   inputPassword.position(609, 462);
-  inputPassword.size(50, 50);
+  inputPassword.size(60, 50);
 
   listoBtn = createButton('Listo');
-  listoBtn.position(575, 550);
+  listoBtn.position(510, 550);
 
   verificarBtn = createButton('Verificar');
   verificarBtn.position(547, 572)
@@ -178,7 +183,7 @@ function setup() {
 
   inputs.forEach(function (elem, i) {
     elem.setAttribute('type', 'number');
-    elem.setAttribute('value', 0);
+    elem.setAttribute('placeholder', 0);
     elem.setAttribute('min', 0);
     elem.setAttribute('max', 99);
   })
@@ -336,15 +341,11 @@ function draw() {
     case 10:
       // Paint background
       cursor(ARROW);
-      background("#FFFBD4");
+      imageMode(CORNER)
+      image(balancescreen, 0, 0, 1280, 720);
 
       timer.paint();
 
-      fill("#0B8481");
-      rect(0, height - 41, width, 41);
-
-      textSize(20);
-      text("¡Recuerda el valor de cada guacamaya!", width / 2 - 150, 100);
       buttonFirst.style.display = "block";
       buttonLast.style.display = "none";
       inputs.forEach(function (elem, i) {
@@ -380,19 +381,22 @@ function draw() {
       leftJail.paint();
       rightJail.paint();
 
-      if (timer.isRunning) {
-        if (frameCount % 60 == 0) {
-          timer.time--;
-        }
+      if(timer.time <= 0) {
+        currentScreen = 13;
+        imageMode(CORNER);
       }
 
+      if (mouseX > 45 && mouseX < 45 + 112 && mouseY > 115 && mouseY < 115 + 73) {
+        cursor(HAND);
+      } else {
+        cursor(ARROW);
+      }
       break;
 
     case 11:
       background("#FFFBD4");
       imageMode(CORNER)
-      image(passwordScreen, 0, 0);
-      image(backArrow, 120, 300);
+      image(passwordScreen, 0, 0, 1280, 720);
       timer.paint();
       fill("#0B8481");
       rect(0, height - 41, width, 41);
@@ -403,7 +407,8 @@ function draw() {
       });
       inputs[6].style.display = "block";
 
-      if (mouseX > 120 && mouseX < 120 + 54 && mouseY > 300 && mouseY < 300 + 45) {
+      if ((mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)
+        || (mouseX > 45 && mouseX < 45 + 112 && mouseY > 115 && mouseY < 115 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -419,12 +424,46 @@ function draw() {
 
       verificarBtn.mousePressed(function () {
         if (inputs[6].value == 8) {
-          window.alert("¡Muy bien! :D");
+          currentScreen = 14;
           timer.isRunning = false;
         } else {
-          window.alert("¡Oh no, esa no era la clave! :c");
+          currentScreen = 12;
         }
       })
+      break;
+
+    case 12:
+      image(wrongpassword, 0, 0, 1280, 720);
+      timer.paint();
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
+
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        cursor(HAND);
+      } else {
+        cursor(ARROW);
+      }
+      break;
+
+    case 13:
+      image(badending, 0, 0, 1280, 720);
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
+      break;
+
+    case 14:
+      image(goodending, 0, 0, 1280, 720);
+      buttonFirst.style.display = "none";
+      buttonLast.style.display = "none";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "none";
+      });
       break;
   }
 }
@@ -473,12 +512,14 @@ function mousePressed() {
         currentScreen = 9;
       }
       break;
+
     case 9:
       if (mouseX > 624 && mouseX < 624 + 94 && mouseY > 455 && mouseY < 455 + 118) {
         currentScreen = 10;
         timer.isRunning = true;
       }
       break;
+
     case 10:
       for (let i = 0; i < birds.length; i++) {
         let bird = birds[i];
@@ -492,10 +533,24 @@ function mousePressed() {
       if (mouseX > 120 && mouseX < 120 + 54 && mouseY > 300 && mouseY < 300 + 45) {
         currentScreen = 11;
       }
+
+      if (mouseX > 45 && mouseX < 45 + 112 && mouseY > 115 && mouseY < 115 + 73) {
+        currentScreen = 3;
+        imageMode(CORNER)
+      }
       break;
     case 11:
-      if (mouseX > 120 && mouseX < 120 + 54 && mouseY > 300 && mouseY < 300 + 45) {
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
         currentScreen = 10;
+      }
+
+      if (mouseX > 45 && mouseX < 45 + 112 && mouseY > 115 && mouseY < 115 + 73) {
+        currentScreen = 3;
+      }
+      break;
+    case 12:
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        currentScreen = 11;
       }
       break;
   }
