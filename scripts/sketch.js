@@ -83,9 +83,9 @@ function preload() {
   redImg = loadImage("./src/img/red-img.png");
 
   // Screens
-  startScreen = loadImage("./src/img/startscreen-img.svg");
+  startScreen = loadImage("./src/img/startscreen.jpg");
   startBtn = loadImage("./src/img/starbutton-img.png")
-  contextScreen = loadImage("./src/img/contextscreen-img.svg");
+  contextScreen = loadImage("./src/img/contextscreen.jpg");
   instruct1Screen = loadImage("./src/img/step1.jpg");
   instruct2Screen = loadImage("./src/img/step2.jpg");
   instruct3Screen = loadImage("./src/img/step3.jpg");
@@ -208,8 +208,6 @@ function draw() {
         elem.style.display = "none";
       })
 
-      image(startBtn, 571, 359);
-
       if (mouseX > 571 && mouseX < 571 + 81 && mouseY > 359 && mouseY < 359 + 100) {
         cursor(HAND);
       } else {
@@ -218,7 +216,7 @@ function draw() {
       break;
 
     case 2:
-      image(contextScreen, 0, 0);
+      image(contextScreen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
       inputs.forEach(function (elem, i) {
