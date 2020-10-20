@@ -4,8 +4,8 @@
     margin: 0;
 }
 
-canvas {
-    display: block;
+img:nth-of-type(2) {
+    cursor: pointer;
 }
 
 input {

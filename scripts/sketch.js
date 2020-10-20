@@ -15,6 +15,7 @@ let rightJail;
 
 let birdSelect = undefined;
 
+// Inputs
 let inputOne;
 let inputTwo;
 let inputThree;
@@ -38,20 +39,24 @@ let badending;
 let goodending;
 let balancescreen;
 let passwordScreen;
+
 let backArrow;
 let nextArrow;
-let gif_loadImg;
+
+let imgs;
 let gif_createImg;
+
 let slotWeight;
 let slotYellow;
 let slotGreen;
 let slotBlue;
 let slotOrange;
 let slotRed;
+
 let url;
 let gifstep1;
 
-let myGif;
+//let myGif;
 
 // Inputs and buttons
 let inputPassword;
@@ -101,10 +106,7 @@ function preload() {
 
   // Animation
   //gif_loadImg = loadImage("./src/video/animacion.gif");
-  //gif_createImg = createImg("./src/video/animacion.gif");
-  //nextArrow = createImg("./src/img/nextarrow.png");
-
-  gifstep1 = "./src/video/animacion.gif";
+  //gifstep1 = "./src/video/animacion.gif";
 }
 
 function setup() {
@@ -177,16 +179,22 @@ function setup() {
   listoBtn.position(510, 550);
 
   verificarBtn = createButton('Verificar');
-  verificarBtn.position(547, 572)
+  verificarBtn.position(547, 572);
+
+  gif_createImg = createImg("./src/video/animacion.gif");
+  nextArrow = createImg("./src/img/nextarrow.png");
+  gif_createImg.position(0, 0);
+  nextArrow.position(814, 570);
 
   inputs = document.querySelectorAll('input');
-
   inputs.forEach(function (elem, i) {
     elem.setAttribute('type', 'number');
     elem.setAttribute('placeholder', 0);
     elem.setAttribute('min', 0);
     elem.setAttribute('max', 99);
   })
+
+  imgs = document.querySelectorAll("img");
 
   button = document.querySelectorAll('button');
 
@@ -208,6 +216,10 @@ function draw() {
         elem.style.display = "none";
       })
 
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
+
       if (mouseX > 571 && mouseX < 571 + 81 && mouseY > 359 && mouseY < 359 + 100) {
         cursor(HAND);
       } else {
@@ -219,8 +231,13 @@ function draw() {
       image(contextScreen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+      
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
+      })
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
       })
 
       if (mouseX > 1163 && mouseX < 1163 + 70 && mouseY > 375 && mouseY < 375 + 59) {
@@ -232,13 +249,15 @@ function draw() {
 
     case 3:
       //background(255);
-      image(instruct1Screen, 0, 0, 1280, 720);
+      //image(instruct1Screen, 0, 0, 1280, 720);
       //myGif = p5Gif.loadGif(gifstep1);
-      //gif_createImg.position(0, 0);
-      //nextArrow.position(814, 570);
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'block';
+      })
 
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       })
@@ -252,11 +271,17 @@ function draw() {
 
     case 4:
       image(instruct2Screen, 0, 0, 1280, 720);
+
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
 
       if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         cursor(HAND);
@@ -269,9 +294,15 @@ function draw() {
       image(instruct3Screen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
+
       if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         cursor(HAND);
       } else {
@@ -283,9 +314,15 @@ function draw() {
       image(instruct4Screen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
+
       if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
         cursor(HAND);
       } else {
@@ -297,9 +334,15 @@ function draw() {
       image(instruct5Screen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
+
       if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
         cursor(HAND);
       } else {
@@ -311,9 +354,15 @@ function draw() {
       image(instruct6Screen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
+
       if (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
         cursor(HAND);
       } else {
@@ -325,9 +374,14 @@ function draw() {
       image(instruct7Screen, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
 
       if (mouseX > 624 && mouseX < 624 + 94 && mouseY > 455 && mouseY < 455 + 118) {
         cursor(HAND);
@@ -346,8 +400,13 @@ function draw() {
 
       buttonFirst.style.display = "block";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "block";
+      })
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
       })
 
       inputs[6].style.display = "none"
@@ -379,7 +438,7 @@ function draw() {
       leftJail.paint();
       rightJail.paint();
 
-      if(timer.time <= 0) {
+      if (timer.time <= 0) {
         currentScreen = 13;
         imageMode(CORNER);
       }
@@ -400,10 +459,15 @@ function draw() {
       rect(0, height - 41, width, 41);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "block";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
       inputs[6].style.display = "block";
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
 
       if ((mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)
         || (mouseX > 45 && mouseX < 45 + 112 && mouseY > 115 && mouseY < 115 + 73)) {
@@ -435,9 +499,14 @@ function draw() {
       timer.paint();
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
 
       if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
         cursor(HAND);
@@ -450,18 +519,28 @@ function draw() {
       image(badending, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
       break;
 
     case 14:
       image(goodending, 0, 0, 1280, 720);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
+
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
+      
+      imgs.forEach(function(elem, i) {
+        elem.style.display = 'none';
+      })
       break;
   }
 }
