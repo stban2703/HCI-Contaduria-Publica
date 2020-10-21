@@ -133,11 +133,13 @@ function setup() {
   //get dpi
   dpi = window.devicePixelRatio;
 
-  /*
+  
   // Fix canvas dpi
   let style_height = +getComputedStyle(canvas).getPropertyValue("height").slice(0, -2);
   //get CSS width
   let style_width = +getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
+
+  /*
   //scale the canvas
   canvas.setAttribute('height', style_height * dpi);
   canvas.setAttribute('width', style_width * dpi);
@@ -503,7 +505,9 @@ function draw() {
       buttonLast.style.display = "block";
 
       // Display password input
-      inputs[6].style.display = "block";
+      inputs.forEach(function (elem, i) {
+        elem.style.display = "block";
+      })
 
       // Hide animation
       imgs.forEach(function (elem, i) {
@@ -563,6 +567,30 @@ function draw() {
           currentScreen = 12;
         }
       })
+
+      if (timer.time <= 0) {
+        if (inputs[1].value == 2) {
+          finalScore += 20;
+        }
+
+        if (inputs[2].value == 5) {
+          finalScore += 20;
+        }
+
+        if (inputs[3].value == 4) {
+          finalScore += 20;
+        }
+
+        if (inputs[4].value == 1) {
+          finalScore += 20;
+        }
+
+        if (inputs[5].value == 3) {
+          finalScore += 20;
+        }
+        currentScreen = 13;
+        imageMode(CORNER);
+      }
       break;
 
     case 12:
