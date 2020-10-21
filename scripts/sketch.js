@@ -111,7 +111,7 @@ function preload() {
   wrongpassword = loadImage("./src/img/wrongpassword.jpg");
   badending = loadImage("./src/img/badending.jpg");
   goodending = loadImage("./src/img/goodending.jpg");
-  passwordScreen = loadImage("./src/img/passwordScreen.jpg");
+  passwordScreen = loadImage("./src/img/altpasswordScreen.jpg");
 }
 
 function setup() {
@@ -133,13 +133,15 @@ function setup() {
   //get dpi
   dpi = window.devicePixelRatio;
 
+  /*
   // Fix canvas dpi
-  /*let style_height = +getComputedStyle(canvas).getPropertyValue("height").slice(0, -2);
+  let style_height = +getComputedStyle(canvas).getPropertyValue("height").slice(0, -2);
   //get CSS width
   let style_width = +getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
   //scale the canvas
   canvas.setAttribute('height', style_height * dpi);
-  canvas.setAttribute('width', style_width * dpi);*/
+  canvas.setAttribute('width', style_width * dpi);
+  */
 
   // Time
   timer = new Timer(10, 10);
@@ -173,8 +175,6 @@ function setup() {
   leftJail.addBird(birds[0]);
   leftJail.addBird(birds[4]);
   rightJail.addBird(birds[1]);
-
-  //rightJail.addBird(birds[1]);
 
   // Inputs
   inputOne = createInput();
@@ -527,7 +527,7 @@ function draw() {
 
       // Calcular puntaje
       verificarBtn.mousePressed(function () {
-        if (inputs[6].value == 8) {
+        if (inputs[6].value == 3) {
 
           if (inputs[1].value == 2) {
             finalScore += 20;
@@ -621,8 +621,7 @@ function draw() {
 
       imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
-      })
-      console.log(finalScore);
+      });
       break;
 
     case 14:
@@ -636,8 +635,7 @@ function draw() {
 
       imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
-      })
-      console.log(finalScore);
+      });
       break;
   }
 }
