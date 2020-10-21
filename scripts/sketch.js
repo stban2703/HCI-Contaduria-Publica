@@ -1,13 +1,6 @@
 let width;
 let height;
 
-// Canvas and context
-let canvas;
-let ctx;
-
-// dpi
-let dpi;
-
 // Variable para la puntuación final
 let finalScore;
 
@@ -125,25 +118,6 @@ function setup() {
   birds = [];
 
   createCanvas(width, height);
-
-  //get canvas
-  canvas = document.querySelector('canvas');
-  //get context
-  ctx = canvas.getContext('2d');
-  //get dpi
-  dpi = window.devicePixelRatio;
-
-  
-  // Fix canvas dpi
-  let style_height = +getComputedStyle(canvas).getPropertyValue("height").slice(0, -2);
-  //get CSS width
-  let style_width = +getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
-
-  /*
-  //scale the canvas
-  canvas.setAttribute('height', style_height * dpi);
-  canvas.setAttribute('width', style_width * dpi);
-  */
 
   // Time
   timer = new Timer(10, 10);
