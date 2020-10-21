@@ -1,18 +1,28 @@
 let width;
 let height;
 
+// Canvas and context
+let canvas;
+let ctx;
+
+// dpi
+let dpi;
+
+// Variable para la puntuación final
+let finalScore;
+
+// Birds images
 let yellowImg;
 let greenImg;
 let blueImg;
 let orangeImg;
 let redImg;
 
+// Birds and jails
 let birdSlot;
 let birds;
-
 let leftJail;
 let rightJail;
-
 let birdSelect = undefined;
 
 // Inputs
@@ -23,7 +33,7 @@ let inputFour;
 let inputFive;
 let inputSix;
 
-// Screens and images
+// Screens and other images
 let startScreen;
 let startBtn;
 let contextScreen;
@@ -39,24 +49,19 @@ let badending;
 let goodending;
 let balancescreen;
 let passwordScreen;
-
+let gif_createImg;
 let backArrow;
 let nextArrow;
-
 let imgs;
-let gif_createImg;
 
+// Slots for birds
 let slotWeight;
 let slotYellow;
 let slotGreen;
 let slotBlue;
 let slotOrange;
 let slotRed;
-
-let url;
-let gifstep1;
-
-//let myGif;
+let slotsFilled;
 
 // Inputs and buttons
 let inputPassword;
@@ -67,7 +72,10 @@ let buttonFirst;
 let buttonLast;
 let inputs;
 
+// Screen
 let currentScreen;
+
+// Timer
 let timer;
 
 function preload() {
@@ -78,6 +86,7 @@ function preload() {
   slotBlue = loadImage("./src/img/slot-blue.png");
   slotOrange = loadImage("./src/img/slot-orange.png");
   slotRed = loadImage("./src/img/slot-red.png");
+  slotsFilled = loadImage("./src/img/slotsfilled.png")
 
   // Birds
   weightOne = loadImage("./src/img/pesa-img.png")
@@ -103,13 +112,12 @@ function preload() {
   badending = loadImage("./src/img/badending.jpg");
   goodending = loadImage("./src/img/goodending.jpg");
   passwordScreen = loadImage("./src/img/passwordScreen.jpg");
-
-  // Animation
-  //gif_loadImg = loadImage("./src/video/animacion.gif");
-  //gifstep1 = "./src/video/animacion.gif";
 }
 
 function setup() {
+
+  finalScore = 0;
+
   currentScreen = 1;
   width = 1280;
   height = 720;
@@ -118,15 +126,32 @@ function setup() {
 
   createCanvas(width, height);
 
+  //get canvas
+  canvas = document.querySelector('canvas');
+  //get context
+  ctx = canvas.getContext('2d');
+  //get dpi
+  dpi = window.devicePixelRatio;
+
+  // Fix canvas dpi
+  /*let style_height = +getComputedStyle(canvas).getPropertyValue("height").slice(0, -2);
+  //get CSS width
+  let style_width = +getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
+  //scale the canvas
+  canvas.setAttribute('height', style_height * dpi);
+  canvas.setAttribute('width', style_width * dpi);*/
+
+  // Time
   timer = new Timer(10, 10);
 
+  // Jails
   leftJail = new Jail(290, height / 2 - 10, 0);
   rightJail = new Jail(930, height / 2 - 10, 0);
 
   leftJail.compareJail(rightJail);
   rightJail.compareJail(leftJail);
 
-
+  // Add slots
   birdSlot.push(new BirdSlot(1159, 52 + 99 * 0, slotWeight));
   birdSlot.push(new BirdSlot(1159, 52 + 99 * 1, slotYellow));
   birdSlot.push(new BirdSlot(1159, 52 + 99 * 2, slotGreen));
@@ -134,8 +159,8 @@ function setup() {
   birdSlot.push(new BirdSlot(1159, 52 + 99 * 4, slotOrange));
   birdSlot.push(new BirdSlot(1159, 52 + 99 * 5, slotRed));
 
-
-  var pesa = new Bird(1173, 59, false, false, true, weightOne, 1);
+  // Birds and weight
+  var pesa = new Bird(1173, 56, false, false, true, weightOne, 1);
   pesa.setBounds(-13);
   birds.push(pesa);
   birds.push(new Bird(1173, 160, false, false, true, yellowImg, 2));
@@ -187,6 +212,10 @@ function setup() {
   nextArrow.position(814, 570);
 
   inputs = document.querySelectorAll('input');
+  imgs = document.querySelectorAll("img");
+  button = document.querySelectorAll('button');
+
+  inputs[0].setAttribute('value', 1);
   inputs.forEach(function (elem, i) {
     elem.setAttribute('type', 'number');
     elem.setAttribute('placeholder', 0);
@@ -194,11 +223,10 @@ function setup() {
     elem.setAttribute('max', 99);
   })
 
-  imgs = document.querySelectorAll("img");
-
-  button = document.querySelectorAll('button');
-
+  // "Listo button"
   buttonFirst = button[0];
+
+  // Password button
   buttonLast = button[1];
 
   buttonFirst.addEventListener('click', function () {
@@ -210,13 +238,14 @@ function draw() {
   switch (currentScreen) {
     case 1:
       image(startScreen, 0, 0, 1280, 720);
+
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       })
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -229,14 +258,14 @@ function draw() {
 
     case 2:
       image(contextScreen, 0, 0, 1280, 720);
+
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-      
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       })
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -248,16 +277,12 @@ function draw() {
       break;
 
     case 3:
-      //background(255);
-      //image(instruct1Screen, 0, 0, 1280, 720);
-      //myGif = p5Gif.loadGif(gifstep1);
-      imgs.forEach(function(elem, i) {
+      // Hide button and inputs
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'block';
       })
-
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       })
@@ -272,14 +297,13 @@ function draw() {
     case 4:
       image(instruct2Screen, 0, 0, 1280, 720);
 
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -292,14 +316,14 @@ function draw() {
 
     case 5:
       image(instruct3Screen, 0, 0, 1280, 720);
+
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -312,14 +336,14 @@ function draw() {
 
     case 6:
       image(instruct4Screen, 0, 0, 1280, 720);
+
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -332,14 +356,14 @@ function draw() {
 
     case 7:
       image(instruct5Screen, 0, 0, 1280, 720);
+
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -352,14 +376,14 @@ function draw() {
 
     case 8:
       image(instruct6Screen, 0, 0, 1280, 720);
+
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -372,14 +396,14 @@ function draw() {
 
     case 9:
       image(instruct7Screen, 0, 0, 1280, 720);
+
+      // Hide button and inputs
       buttonFirst.style.display = "none";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -398,17 +422,15 @@ function draw() {
 
       timer.paint();
 
+      // Hide button and inputs
       buttonFirst.style.display = "block";
       buttonLast.style.display = "none";
-
       inputs.forEach(function (elem, i) {
         elem.style.display = "block";
       })
-
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
-
       inputs[6].style.display = "none"
 
       if (inputOne.value() != "" &&
@@ -438,15 +460,34 @@ function draw() {
       leftJail.paint();
       rightJail.paint();
 
-      if (timer.time <= 0) {
-        currentScreen = 13;
-        imageMode(CORNER);
-      }
-
       if (mouseX > 45 && mouseX < 45 + 112 && mouseY > 115 && mouseY < 115 + 73) {
         cursor(HAND);
       } else {
         cursor(ARROW);
+      }
+
+      if (timer.time <= 0) {
+        if (inputs[1].value == 2) {
+          finalScore += 20;
+        }
+
+        if (inputs[2].value == 5) {
+          finalScore += 20;
+        }
+
+        if (inputs[3].value == 4) {
+          finalScore += 20;
+        }
+
+        if (inputs[4].value == 1) {
+          finalScore += 20;
+        }
+
+        if (inputs[5].value == 3) {
+          finalScore += 20;
+        }
+        currentScreen = 13;
+        imageMode(CORNER);
       }
       break;
 
@@ -454,18 +495,18 @@ function draw() {
       background("#FFFBD4");
       imageMode(CORNER)
       image(passwordScreen, 0, 0, 1280, 720);
+      image(slotsFilled, 1159, 52);
       timer.paint();
       fill("#0B8481");
       rect(0, height - 41, width, 41);
       buttonFirst.style.display = "none";
       buttonLast.style.display = "block";
 
-      inputs.forEach(function (elem, i) {
-        elem.style.display = "none";
-      });
+      // Display password input
       inputs[6].style.display = "block";
 
-      imgs.forEach(function(elem, i) {
+      // Hide animation
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -484,10 +525,40 @@ function draw() {
         buttonLast.disabled = true;
       }
 
+      // Calcular puntaje
       verificarBtn.mousePressed(function () {
         if (inputs[6].value == 8) {
-          currentScreen = 14;
+
+          if (inputs[1].value == 2) {
+            finalScore += 20;
+          }
+
+          if (inputs[2].value == 5) {
+            finalScore += 20;
+          }
+
+          if (inputs[3].value == 4) {
+            finalScore += 20;
+          }
+
+          if (inputs[4].value == 1) {
+            finalScore += 20;
+          }
+
+          if (inputs[5].value == 3) {
+            finalScore += 20;
+          }
+
+          finalScore += 50;
+          if (timer.time >= 60) {
+            finalScore += 50;
+          } else if (timer.time >= 30 && timer.time < 60) {
+            finalScore += 25;
+          } else if (timer.time < 30) {
+            finalScore += 10
+          }
           timer.isRunning = false;
+          currentScreen = 14;
         } else {
           currentScreen = 12;
         }
@@ -504,7 +575,7 @@ function draw() {
         elem.style.display = "none";
       });
 
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
 
@@ -512,6 +583,30 @@ function draw() {
         cursor(HAND);
       } else {
         cursor(ARROW);
+      }
+
+      if (timer.time <= 0) {
+        if (inputs[1].value == 2) {
+          finalScore += 20;
+        }
+
+        if (inputs[2].value == 5) {
+          finalScore += 20;
+        }
+
+        if (inputs[3].value == 4) {
+          finalScore += 20;
+        }
+
+        if (inputs[4].value == 1) {
+          finalScore += 20;
+        }
+
+        if (inputs[5].value == 3) {
+          finalScore += 20;
+        }
+        currentScreen = 13;
+        imageMode(CORNER);
       }
       break;
 
@@ -524,9 +619,10 @@ function draw() {
         elem.style.display = "none";
       });
 
-      imgs.forEach(function(elem, i) {
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
+      console.log(finalScore);
       break;
 
     case 14:
@@ -537,10 +633,11 @@ function draw() {
       inputs.forEach(function (elem, i) {
         elem.style.display = "none";
       });
-      
-      imgs.forEach(function(elem, i) {
+
+      imgs.forEach(function (elem, i) {
         elem.style.display = 'none';
       })
+      console.log(finalScore);
       break;
   }
 }
