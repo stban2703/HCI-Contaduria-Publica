@@ -71,6 +71,9 @@ let currentScreen;
 // Timer
 let timer;
 
+// Correct answer
+let correctAnswer;
+
 function preload() {
   // Slots
   slotWeight = loadImage("./src/img/slot-weight.png");
@@ -104,13 +107,13 @@ function preload() {
   wrongpassword = loadImage("./src/img/wrongpassword.jpg");
   badending = loadImage("./src/img/badending.jpg");
   goodending = loadImage("./src/img/goodending.jpg");
-  passwordScreen = loadImage("./src/img/altpasswordScreen.jpg");
+  passwordScreen = loadImage("./src/img/passwordScreen.jpg");
 }
 
 function setup() {
 
   finalScore = 0;
-
+  correctAnswer = 8;
   currentScreen = 1;
   width = 1280;
   height = 720;
@@ -505,7 +508,7 @@ function draw() {
 
       // Calcular puntaje
       verificarBtn.mousePressed(function () {
-        if (inputs[6].value == 3) {
+        if (inputs[6].value == correctAnswer) {
 
           if (inputs[1].value == 2) {
             finalScore += 20;
