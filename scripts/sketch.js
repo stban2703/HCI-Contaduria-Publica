@@ -266,7 +266,7 @@ function draw() {
         elem.style.display = "none";
       })
 
-      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
+      if ((mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) || (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -286,7 +286,7 @@ function draw() {
         elem.style.display = 'none';
       })
 
-      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
+      if ((mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) || (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -306,7 +306,7 @@ function draw() {
         elem.style.display = 'none';
       })
 
-      if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
+      if ((mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) || (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -326,7 +326,7 @@ function draw() {
         elem.style.display = 'none';
       })
 
-      if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
+      if ((mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) || (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -346,7 +346,7 @@ function draw() {
         elem.style.display = 'none';
       })
 
-      if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
+      if ((mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) || (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -366,7 +366,7 @@ function draw() {
         elem.style.display = 'none';
       })
 
-      if (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
+      if ((mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) || (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -386,7 +386,8 @@ function draw() {
         elem.style.display = 'none';
       })
 
-      if (mouseX > 624 && mouseX < 624 + 94 && mouseY > 455 && mouseY < 455 + 118) {
+      if ((mouseX > 624 && mouseX < 624 + 94 && mouseY > 455 && mouseY < 455 + 118) 
+      || (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73)) {
         cursor(HAND);
       } else {
         cursor(ARROW);
@@ -664,33 +665,57 @@ function mousePressed() {
       }
       break;
     case 4:
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        currentScreen = 3;
+      }
+
       if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         currentScreen = 5;
       }
       break;
     case 5:
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        currentScreen = 4;
+      }
+
       if (mouseX > 814 && mouseX < 814 + 67 && mouseY > 570 && mouseY < 570 + 80) {
         currentScreen = 6;
       }
       break;
     case 6:
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        currentScreen = 5;
+      }
+
       if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
         currentScreen = 7;
       }
       break;
     case 7:
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        currentScreen = 6;
+      }
+
       if (mouseX > 973 && mouseX < 973 + 67 && mouseY > 537 && mouseY < 537 + 80) {
         currentScreen = 8;
       }
       break;
 
     case 8:
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        currentScreen = 7;
+      }
+
       if (mouseX > 1109 && mouseX < 1109 + 94 && mouseY > 527 && mouseY < 527 + 118) {
         currentScreen = 9;
       }
       break;
 
     case 9:
+      if (mouseX > 66 && mouseX < 66 + 54 && mouseY > 300 && mouseY < 300 + 73) {
+        currentScreen = 8;
+      }
+
       if (mouseX > 624 && mouseX < 624 + 94 && mouseY > 455 && mouseY < 455 + 118) {
         currentScreen = 10;
         timer.isRunning = true;
